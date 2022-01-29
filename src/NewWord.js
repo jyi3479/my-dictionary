@@ -108,7 +108,7 @@ const Input = styled.div`
   max-width: 350px;
   min-height: 10vh;
   background-color: #fff;
-  padding: 60px 0px 60px 120px;
+  padding: 80px 50px 80px 80px;
   margin: 20px auto;
   border-radius: 5px;
   border: 1px solid #ddd;

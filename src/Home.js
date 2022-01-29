@@ -25,7 +25,7 @@ const Home = (props) => {
 
 const Title = styled.h1`
   text-align: center;
-  color: grey;
+  color: #6a5acd;
   margin: 30px;
 `;
 

@@ -4,8 +4,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Home from "./Home";
 import NewWord from "./NewWord";
 import Update from "./Update";
-import { db } from "./firebase";
-import { collection, getDoc, getDocs, addDoc } from "firebase/firestore";
+import "./App.css";
+import styled from "styled-components";
 
 function App() {
   return (

@@ -19,8 +19,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Update from "./Update";
 import { WindowSharp } from "@mui/icons-material";
+import "./App.css";
 
-export default function OutlinedCard() {
+const WordList = (props) => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const my_lists = useSelector((state) => state.word.list);
@@ -29,7 +30,7 @@ export default function OutlinedCard() {
   }, []);
 
   return (
-    <MyBox sx={{ flexGrow: 1 }} m={5}>
+    <MyBox className="WordList" sx={{ flexGrow: 1 }} m={5}>
       <Grid
         container
         spacing={{ xs: 2, md: 3 }}
@@ -37,7 +38,7 @@ export default function OutlinedCard() {
       >
         {my_lists.map((list, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
-            <MyCard variant="outlined">
+            <MyCard variant="outlined" style={{ borderColor: "#6a5acd" }}>
               <React.Fragment>
                 <CardContent>
                   <Typography
@@ -47,26 +48,50 @@ export default function OutlinedCard() {
                   >
                     {/* Word of the Day */}
                   </Typography>
-                  <Typography variant="h5" component="div">
+                  <Typography
+                    variant="body"
+                    component="div"
+                    style={{ fontSize: "25px" }}
+                  >
                     {list.word}
                   </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                  <Typography
+                    variant="body"
+                    sx={{ mb: 1.5 }}
+                    color="text.secondary"
+                    style={{ fontSize: "20px" }}
+                  >
                     {list.desc}
                   </Typography>
-                  <Typography variant="body2" style={{ color: "blue" }}>
+                  <br />
+                  <Typography variant="body" style={{ color: "blue" }}>
                     {list.example}
                   </Typography>
                 </CardContent>
-                <CardActions>
+                <CardActions
+                // style={{
+                //   position: "relative",
+                //   bottom: "120px",
+                //   left: "140px",
+                //   display: "flex",
+                //   -webkit-box-align: "center",
+                //   alignItems: "center",
+                // }}
+                >
                   <Button
                     size="small"
                     onClick={() => {
                       navigate(`./update/${list.id}`);
                     }}
+                    style={{
+                      color: "white",
+                      backgroundColor: "#6a5acd",
+                    }}
                   >
                     수정
                   </Button>
                   <Button
+                    variant="contained"
                     size="small"
                     onClick={() => {
                       dispatch(deleteWordFB(list.id));
@@ -82,7 +107,16 @@ export default function OutlinedCard() {
       </Grid>
     </MyBox>
   );
-}
+};
+
+// const ButtonBox = styled.div`
+//   float: right;
+//   margin: 10px 20px 0px 0px;
+//   font-size: 15px;
+//   font-weight: bold;
+//   text-align: center;
+//   color: white;
+// `;
 
 const MyBox = styled(Box)({
   // background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -100,6 +134,8 @@ const MyCard = styled(Card)({
   // borderRadius: 3,
   // boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
   // height: 48,
-  padding: "0 30px",
+  padding: "10px 20px",
   margin: "10px",
 });
+
+export default WordList;
