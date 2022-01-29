@@ -67,21 +67,21 @@ const Update = (props) => {
             label="단어"
             variant="standard"
             inputRef={(el) => (inputRef.current[0] = el)}
-            value={target_word.word}
+            defaultValue={target_word.word}
           />
           <TextField
             id="standard-basic"
             label="설명"
             variant="standard"
             inputRef={(el) => (inputRef.current[1] = el)}
-            value={target_word.desc}
+            defaultValue={target_word.desc}
           />
           <TextField
             id="standard-basic"
             label="예문"
             variant="standard"
             inputRef={(el) => (inputRef.current[2] = el)}
-            value={target_word.example}
+            defaultValue={target_word.example}
           />
         </Box>
         {/* <button
