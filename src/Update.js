@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { createWord, updateWordFB } from "./redux/modules/word";
+import { createWord, updateWordFB, loadWordFB } from "./redux/modules/word";
 import { useNavigate } from "react-router-dom";
 import { Box, TextField, Button } from "@material-ui/core";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
@@ -13,6 +13,11 @@ const Update = (props) => {
   const inputRef = React.useRef([]);
   // useHistory 사용하는 것과 비슷하죠? :)
   const dispatch = useDispatch();
+  const my_lists = useSelector((state) => state.word.list);
+  const target_word = my_lists.filter((l) => l.id === my_id)[0];
+  React.useEffect(() => {
+    dispatch(loadWordFB());
+  }, []);
 
   //   console.log(inputRef.current[0].value);
 
@@ -62,18 +67,21 @@ const Update = (props) => {
             label="단어"
             variant="standard"
             inputRef={(el) => (inputRef.current[0] = el)}
+            value={target_word.word}
           />
           <TextField
             id="standard-basic"
             label="설명"
             variant="standard"
             inputRef={(el) => (inputRef.current[1] = el)}
+            value={target_word.desc}
           />
           <TextField
             id="standard-basic"
             label="예문"
             variant="standard"
             inputRef={(el) => (inputRef.current[2] = el)}
+            value={target_word.example}
           />
         </Box>
         {/* <button

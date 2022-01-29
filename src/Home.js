@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 const Home = (props) => {
   let navigate = useNavigate();
+  // window.addEventListener("scroll", () => console.log("🌀"));
   return (
     <div>
       <Title> 단어장 </Title>
