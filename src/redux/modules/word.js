@@ -16,15 +16,18 @@ const LOAD = "word/LOAD";
 const CREATE = "word/CREATE";
 const DELETE = "word/DELETE";
 const UPDATE = "word/UPDATE";
+const COMPLETE = "word/COMPLETE";
 // const REMOVE = "my-app/widgets/REMOVE";
 
 // 초기값
 const initialState = {
+  is_loaded: false,
   list: [
     {
       word: "newspaper",
       desc: "신문지",
       example: "He slapped the newspaper down on the desk.",
+      completed: false,
     },
   ],
 };
@@ -39,8 +42,12 @@ export const createWord = (word) => {
   return { type: CREATE, word };
 };
 
-export function updateWord(word_index, word) {
-  return { type: UPDATE, word_index, word };
+export function updateWord(word_index, word_completed) {
+  return { type: UPDATE, word_index, word_completed };
+}
+
+export function completeWord(word_index) {
+  return { type: COMPLETE, word_index };
 }
 
 export function deleteWord(word_index) {
@@ -52,8 +59,8 @@ export function deleteWord(word_index) {
 export const loadWordFB = () => {
   return async function (dispatch) {
     const word_data = await getDocs(collection(db, "dictionary"));
-    console.log(word_data);
 
+    console.log(word_data);
     let word_list = [];
 
     word_data.forEach((doc) => {
@@ -75,6 +82,32 @@ export const addWordFB = (word) => {
     console.log(word_data);
 
     dispatch(createWord(word_data));
+  };
+};
+
+export const completeWordFB = (word_id, word_completed) => {
+  // getState 왜 받아오지?
+  return async function (dispatch, getState) {
+    if (!word_id) {
+      window.alert("아이디가 없네요!");
+      return;
+    }
+    const docRef = doc(db, "dictionary", word_id);
+    await updateDoc(
+      docRef,
+      word_completed
+        ? {
+            completed: false,
+          }
+        : { completed: true }
+    );
+
+    const _word_list = getState().word.list;
+    const word_index = _word_list.findIndex((b) => {
+      return b.id === word_id;
+    });
+
+    dispatch(completeWord(word_index, word_completed));
   };
 };
 
@@ -120,17 +153,36 @@ export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     // do reducer stuff
     case "word/LOAD": {
-      return { list: action.word_list };
+      return { list: action.word_list, is_loaded: true };
     }
 
     case "word/CREATE": {
       const new_word_list = [...state.list, action.word];
-      return { list: new_word_list };
+      return { ...state, list: new_word_list };
+    }
+
+    case "word/COMPLETE": {
+      console.log("완료!");
+      // const new_word_list = state.list.map((l, idx) => {
+      //   if (parseInt(action.word_index) === idx) {
+      //     new_word_list.completed = l.completed ? false : true;
+      //   }
+      // });
+
+      let new_word_list = state.list;
+
+      return { ...state, list: [...new_word_list] };
     }
 
     case "word/UPDATE": {
       const new_word_list = [...state.list];
-      return { list: new_word_list };
+      // new_word_list = new_word_list.map((l, idx) => {
+      //   if (parseInt(action.word_index) === idx) {
+      //     return l.completed ? (l.completed = false) : (l.completed = true);
+      //   }
+      // });
+      // console.log(new_word_list);
+      return { ...state, list: new_word_list };
     }
 
     case "word/DELETE": {

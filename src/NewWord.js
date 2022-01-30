@@ -29,6 +29,7 @@ const NewWord = (props) => {
       word: inputRef.current[0].value,
       desc: inputRef.current[1].value,
       example: inputRef.current[2].value,
+      completed: false,
     };
     console.log(new_dic);
     // dispatch(createWord(new_dic));

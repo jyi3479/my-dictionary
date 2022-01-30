@@ -4,6 +4,8 @@ import {
   loadWordFB,
   deleteWord,
   deleteWordFB,
+  completeWord,
+  completeWordFB,
 } from "./redux/modules/word";
 import {
   Card,
@@ -38,7 +40,14 @@ const WordList = (props) => {
       >
         {my_lists.map((list, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
-            <MyCard variant="outlined" style={{ borderColor: "#6a5acd" }}>
+            <MyCard
+              variant="outlined"
+              style={{
+                borderColor: "#6a5acd",
+                backgroundColor: list.completed ? "#d2d2ff" : "none",
+                color: list.completed ? "white" : "black",
+              }}
+            >
               <React.Fragment>
                 <CardContent>
                   <Typography
@@ -78,6 +87,15 @@ const WordList = (props) => {
                 //   alignItems: "center",
                 // }}
                 >
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={() => {
+                      dispatch(completeWordFB(list.id, list.completed));
+                    }}
+                  >
+                    완료
+                  </Button>
                   <Button
                     size="small"
                     onClick={() => {
