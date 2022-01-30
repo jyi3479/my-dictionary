@@ -141,9 +141,10 @@ export default function reducer(state = initialState, action = {}) {
           action.word_index,
           state.list[idx].id
         );
-        return action.word_index !== state.list[idx].id;
+        //index와 id를 비교했어서, firestore만 지워지고 state는 안지워져서 삭제 후 사라지지 않았음
+        return action.word_index !== idx;
       });
-      return { list: new_word_list };
+      return { ...state, list: [...new_word_list] };
     }
 
     default:
