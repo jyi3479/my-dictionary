@@ -22,14 +22,7 @@ const COMPLETE = "word/COMPLETE";
 // 초기값
 const initialState = {
   is_loaded: false,
-  list: [
-    {
-      word: "newspaper",
-      desc: "신문지",
-      example: "He slapped the newspaper down on the desk.",
-      completed: false,
-    },
-  ],
+  list: [],
 };
 
 // Action Creators
@@ -42,8 +35,8 @@ export const createWord = (word) => {
   return { type: CREATE, word };
 };
 
-export function updateWord(word_index, word_completed) {
-  return { type: UPDATE, word_index, word_completed };
+export function updateWord(word_index, new_word) {
+  return { type: UPDATE, word_index, new_word };
 }
 
 export function completeWord(word_index) {
@@ -111,15 +104,15 @@ export const completeWordFB = (word_id, word_completed) => {
   };
 };
 
-export const updateWordFB = (word_id, word) => {
+export const updateWordFB = (word_id, new_word) => {
   return async function (dispatch, getState) {
     // 수정할 도큐먼트 가져오기
     const docRef = doc(db, "dictionary", word_id);
     // 수정하기
-    await updateDoc(docRef, { id: word_id, ...word });
+    await updateDoc(docRef, { id: word_id, ...new_word });
     //getState() 사용해서 스토어의 데이터를 가져올 수 있다.
     const _word_list = getState().word.list;
-    const word_data = { id: docRef.id, ...word };
+    const word_data = { id: docRef.id, ...new_word };
     //findIndex로 몇 번째에 있는 지 찾기!
     const word_index = _word_list.findIndex((b) => {
       //updateWordFB의 파라미터로 넘겨받은 아이디와 똑같은 아이디가 몇 번 째에 있는지 찾기
@@ -153,7 +146,7 @@ export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     // do reducer stuff
     case "word/LOAD": {
-      return { list: action.word_list, is_loaded: true };
+      return { ...state, list: action.word_list, is_loaded: true };
     }
 
     case "word/CREATE": {
@@ -177,7 +170,13 @@ export default function reducer(state = initialState, action = {}) {
     }
 
     case "word/UPDATE": {
-      const new_word_list = [...state.list];
+      let new_word_list = state.list;
+      for (let i = 0; i < new_word_list.length; i++) {
+        if (parseInt(action.word_index) === i) {
+          new_word_list[i] = [...action.new_word];
+        }
+      }
+      console.log("수정", new_word_list);
 
       return { ...state, list: new_word_list };
     }

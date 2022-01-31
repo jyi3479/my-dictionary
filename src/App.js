@@ -18,7 +18,7 @@ function App() {
         <Route path="/add" element={<NewWord />} />
         <Route path="/update/:my_id" element={<Update />} />
       </Routes>
-      {!is_loaded && <Spinner />}
+      {/* {!is_loaded && <Spinner />} */}
     </div>
   );
 }

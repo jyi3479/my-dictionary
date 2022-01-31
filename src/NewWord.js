@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { createWord, addWordFB } from "./redux/modules/word";
+import { createWord, addWordFB, loadWordFB } from "./redux/modules/word";
 import { useNavigate } from "react-router-dom";
 import { Box, TextField } from "@material-ui/core";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";

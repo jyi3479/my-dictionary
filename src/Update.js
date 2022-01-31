@@ -11,14 +11,14 @@ const Update = (props) => {
   const { my_id } = useParams();
   let navigate = useNavigate();
   const inputRef = React.useRef([]);
-  // useHistory 사용하는 것과 비슷하죠? :)
   const dispatch = useDispatch();
-  const my_lists = useSelector((state) => state.word.list);
-  const target_word = my_lists.filter((l) => l.id === my_id)[0];
+
+  const my_lists = useSelector((state) => state.word.list).filter(
+    (l) => l.id === my_id
+  )[0];
   React.useEffect(() => {
     dispatch(loadWordFB());
   }, []);
-
   //   console.log(inputRef.current[0].value);
 
   const addWordList = () => {
@@ -42,14 +42,6 @@ const Update = (props) => {
     dispatch(updateWordFB(my_id, new_dic));
   };
 
-  const theme = createTheme({
-    palette: {
-      secondary: {
-        main: "#287a9f",
-      },
-    },
-  });
-
   return (
     <Outer>
       <Input>
@@ -68,8 +60,7 @@ const Update = (props) => {
             variant="standard"
             color="primary"
             inputRef={(el) => (inputRef.current[0] = el)}
-            defaultValue={target_word.word}
-            margin="dense"
+            defaultValue={my_lists ? my_lists.word : null}
             fullWidth
             focused
           />
@@ -78,7 +69,7 @@ const Update = (props) => {
             variant="standard"
             color="primary"
             inputRef={(el) => (inputRef.current[1] = el)}
-            defaultValue={target_word.desc}
+            defaultValue={my_lists ? my_lists.desc : null}
             margin="dense"
             fullWidth
             focused
@@ -88,7 +79,7 @@ const Update = (props) => {
             variant="standard"
             color="primary"
             inputRef={(el) => (inputRef.current[2] = el)}
-            defaultValue={target_word.example}
+            defaultValue={my_lists ? my_lists.example : null}
             margin="dense"
             fullWidth
             focused
