@@ -20,7 +20,9 @@ import { styled } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Update from "./Update";
-import { WindowSharp } from "@mui/icons-material";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import EditIcon from "@mui/icons-material/Edit";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import "./App.css";
 
 const WordList = (props) => {
@@ -44,7 +46,7 @@ const WordList = (props) => {
               variant="outlined"
               style={{
                 borderColor: "#6a5acd",
-                backgroundColor: list.completed ? "#d2d2ff" : "none",
+                backgroundColor: list.completed ? "#d2d2ff" : "white",
                 color: list.completed ? "white" : "black",
               }}
             >
@@ -81,42 +83,41 @@ const WordList = (props) => {
                 // style={{
                 //   position: "relative",
                 //   bottom: "120px",
-                //   left: "140px",
+                //   left: "260px",
                 //   display: "flex",
-                //   -webkit-box-align: "center",
+                //   width: "100px",
+
                 //   alignItems: "center",
                 // }}
                 >
-                  <Button
-                    variant="outlined"
-                    size="small"
+                  <CheckCircleOutlineIcon
                     onClick={() => {
                       dispatch(completeWordFB(list.id, list.completed));
                     }}
-                  >
-                    완료
-                  </Button>
-                  <Button
-                    size="small"
+                    style={{
+                      cursor: "pointer",
+                      color: list.completed ? "white" : "#6a5acd",
+                    }}
+                  />
+                  <EditIcon
                     onClick={() => {
                       navigate(`./update/${list.id}`);
                     }}
                     style={{
-                      color: "white",
-                      backgroundColor: "#6a5acd",
+                      cursor: "pointer",
+                      color: list.completed ? "white" : "#6a5acd",
                     }}
-                  >
-                    수정
-                  </Button>
-                  <Button
-                    variant="contained"
-                    size="small"
+                  />
+
+                  <HighlightOffIcon
                     onClick={() => {
                       dispatch(deleteWordFB(list.id));
                     }}
-                  >
-                    삭제
-                  </Button>
+                    style={{
+                      cursor: "pointer",
+                      color: list.completed ? "white" : "#6a5acd",
+                    }}
+                  />
                 </CardActions>
               </React.Fragment>
             </MyCard>

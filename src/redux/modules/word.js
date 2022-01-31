@@ -162,26 +162,23 @@ export default function reducer(state = initialState, action = {}) {
     }
 
     case "word/COMPLETE": {
-      console.log("완료!");
-      // const new_word_list = state.list.map((l, idx) => {
-      //   if (parseInt(action.word_index) === idx) {
-      //     new_word_list.completed = l.completed ? false : true;
-      //   }
-      // });
-
       let new_word_list = state.list;
+      for (let i = 0; i < new_word_list.length; i++) {
+        if (parseInt(action.word_index) === i) {
+          new_word_list[i].completed = new_word_list[i].completed
+            ? false
+            : true;
+        }
+      }
+
+      // let new_word_list = state.list;
 
       return { ...state, list: [...new_word_list] };
     }
 
     case "word/UPDATE": {
       const new_word_list = [...state.list];
-      // new_word_list = new_word_list.map((l, idx) => {
-      //   if (parseInt(action.word_index) === idx) {
-      //     return l.completed ? (l.completed = false) : (l.completed = true);
-      //   }
-      // });
-      // console.log(new_word_list);
+
       return { ...state, list: new_word_list };
     }
 

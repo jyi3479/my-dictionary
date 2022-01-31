@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { createWord, addWordFB } from "./redux/modules/word";
 import { useNavigate } from "react-router-dom";
-import { Box, TextField, Button } from "@material-ui/core";
+import { Box, TextField } from "@material-ui/core";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 
 const NewWord = (props) => {
@@ -45,59 +45,73 @@ const NewWord = (props) => {
   });
 
   return (
-    <div>
-      <Title>단어 추가하기</Title>
+    <Outer>
       <Input>
+        <Title>단어 추가하기</Title>
         <Box
           component="form"
           sx={{
-            "& > :not(style)": { m: 1, width: "25ch" },
+            "& > :not(style)": { m: 1, width: "500" },
           }}
           noValidate
           autoComplete="off"
         >
           <TextField
-            id="standard-basic"
             label="단어"
             variant="standard"
+            color="primary"
             inputRef={(el) => (inputRef.current[0] = el)}
+            margin="dense"
+            fullWidth
+            focused
           />
           <TextField
-            id="standard-basic"
             label="설명"
             variant="standard"
+            color="primary"
             inputRef={(el) => (inputRef.current[1] = el)}
+            margin="dense"
+            fullWidth
+            focused
           />
           <TextField
-            id="standard-basic"
             label="예문"
             variant="standard"
+            color="primary"
             inputRef={(el) => (inputRef.current[2] = el)}
+            margin="dense"
+            fullWidth
+            focused
           />
         </Box>
-        {/* <button
-        onClick={() => {
-          addBucketList();
-          navigate("/");
-        }}
-      >
-        추가하기
-      </button> */}
 
-        <Button
-          variant="contained"
-          onClick={() => {
-            addWordList();
-            navigate("/");
-          }}
-          style={{ margin: "50px" }}
-        >
-          저장하기
-        </Button>
+        <ButtonBox>
+          <Button
+            onClick={() => {
+              addWordList();
+              navigate("/");
+            }}
+          >
+            저장하기
+          </Button>
+          <Button
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            돌아가기
+          </Button>
+        </ButtonBox>
       </Input>
-    </div>
+    </Outer>
   );
 };
+
+const Outer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const Title = styled.h1`
   text-align: center;
@@ -107,12 +121,20 @@ const Title = styled.h1`
 
 const Input = styled.div`
   max-width: 350px;
-  min-height: 10vh;
-  background-color: #fff;
-  padding: 80px 50px 80px 80px;
   margin: 20px auto;
-  border-radius: 5px;
-  border: 1px solid #ddd;
+`;
+
+const ButtonBox = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const Button = styled.div`
+  cursor: pointer;
+  margin: 40px auto;
+  padding: 5px 35px;
+  background-color: #6a5acd;
+  color: white;
 `;
 
 export default NewWord;

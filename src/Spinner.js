@@ -1,15 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 const Spinner = (props) => {
   return (
     <Outer>
       <Title> 단어장 </Title>
-      <Button
-      // onClick={() => {
-      //   navigate(`./add`);
-      // }}
-      ></Button>
+      <Button>
+        <AddCircleIcon style={{ fontSize: "50px", color: "#6a5acd" }} />
+      </Button>
     </Outer>
   );
 };
@@ -33,11 +32,6 @@ const Outer = styled.div`
 `;
 
 const Button = styled.div`
-  width: 0px;
-  height: 0px;
-  border-left: 40px solid #6a5acd;
-  border-top: 20px solid transparent;
-  border-bottom: 20px solid transparent;
   margin: 5px;
   display: flex;
   cursor: pointer;
