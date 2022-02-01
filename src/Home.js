@@ -42,18 +42,16 @@ const Title = styled.h1`
 `;
 
 const Button = styled.div`
-  /* width: 0px;
-  height: 0px;
-  border-left: 40px solid #6a5acd;
-  border-top: 20px solid transparent;
-  border-bottom: 20px solid transparent;
-  margin: 5px;
-  display: flex; */
   cursor: pointer;
-
   position: fixed;
   bottom: 15px;
   right: 15px;
+
+  transition: transform 300ms ease-in-out;
+
+  &:hover {
+    transform: rotate(90deg);
+  }
 `;
 
 export default Home;
