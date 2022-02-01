@@ -123,7 +123,6 @@ export const updateWordFB = (word_id, new_word) => {
 };
 
 export const deleteWordFB = (word_id) => {
-  // getState 왜 받아오지?
   return async function (dispatch, getState) {
     if (!word_id) {
       window.alert("아이디가 없네요!");
@@ -171,12 +170,6 @@ export default function reducer(state = initialState, action = {}) {
 
     case "word/UPDATE": {
       let new_word_list = state.list;
-      for (let i = 0; i < new_word_list.length; i++) {
-        if (parseInt(action.word_index) === i) {
-          new_word_list[i] = [...action.new_word];
-        }
-      }
-      console.log("수정", new_word_list);
 
       return { ...state, list: new_word_list };
     }

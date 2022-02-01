@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { createWord, updateWordFB, loadWordFB } from "./redux/modules/word";
 import { useNavigate } from "react-router-dom";
-import { Box, TextField } from "@material-ui/core";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 
 const Update = (props) => {
@@ -13,9 +12,10 @@ const Update = (props) => {
   const inputRef = React.useRef([]);
   const dispatch = useDispatch();
 
-  const my_lists = useSelector((state) => state.word.list).filter(
+  const target_word = useSelector((state) => state.word.list).filter(
     (l) => l.id === my_id
   )[0];
+  console.log(target_word, "마이 리스트!!");
   React.useEffect(() => {
     dispatch(loadWordFB());
   }, []);
@@ -31,6 +31,7 @@ const Update = (props) => {
     //   desc: inputRef.current[1].value,
     //   example: inputRef.current[2].value,
     // };
+    console.log(inputRef);
 
     const new_dic = {
       word: inputRef.current[0].value,
@@ -44,47 +45,42 @@ const Update = (props) => {
 
   return (
     <Outer>
-      <Input>
-        <Title>단어 수정하기</Title>
+      <Title>단어 수정하기</Title>
 
-        <Box
-          component="form"
-          sx={{
-            "& > :not(style)": { m: 1, width: "500" },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            label="단어"
-            variant="standard"
-            color="primary"
-            inputRef={(el) => (inputRef.current[0] = el)}
-            defaultValue={my_lists ? my_lists.word : null}
-            fullWidth
-            focused
+      <div
+        style={{
+          width: "50vw",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          padding: "10px",
+        }}
+      >
+        <label for="word">
+          단어
+          <Input //input으로 하면 defaultValue 해결된다.
+            id="word"
+            ref={(el) => (inputRef.current[0] = el)}
+            defaultValue={target_word ? target_word.word : null}
           />
-          <TextField
-            label="설명"
-            variant="standard"
-            color="primary"
-            inputRef={(el) => (inputRef.current[1] = el)}
-            defaultValue={my_lists ? my_lists.desc : null}
-            margin="dense"
-            fullWidth
-            focused
+        </label>
+
+        <label>
+          설명
+          <Input
+            ref={(el) => (inputRef.current[1] = el)}
+            defaultValue={target_word ? target_word.desc : null}
           />
-          <TextField
-            label="예문"
-            variant="standard"
-            color="primary"
-            inputRef={(el) => (inputRef.current[2] = el)}
-            defaultValue={my_lists ? my_lists.example : null}
-            margin="dense"
-            fullWidth
-            focused
+        </label>
+
+        <label>
+          예문
+          <Input
+            ref={(el) => (inputRef.current[2] = el)}
+            defaultValue={target_word ? target_word.example : null}
           />
-        </Box>
+        </label>
+
         <ButtonBox>
           <Button
             onClick={() => {
@@ -102,7 +98,7 @@ const Update = (props) => {
             돌아가기
           </Button>
         </ButtonBox>
-      </Input>
+      </div>
     </Outer>
   );
 };
@@ -111,6 +107,12 @@ const Outer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+
+  label {
+    font-weight: 600;
+    color: #6a5acd;
+  }
 `;
 
 const Title = styled.h1`
@@ -119,22 +121,34 @@ const Title = styled.h1`
   margin: 50px;
 `;
 
-const Input = styled.div`
-  max-width: 350px;
-  margin: 20px auto;
-`;
-
 const ButtonBox = styled.div`
+  width: 50vw;
   display: flex;
   justify-content: center;
 `;
 
+const Input = styled.input`
+  border: none;
+  border-bottom: 1px solid #d2d2ff;
+  margin: 10px 15px;
+  padding: 7px 0;
+  width: 300px;
+  transition: border-color 300ms ease-in-out;
+  &:focus {
+    border-color: #6a5acd;
+    outline: none;
+  }
+`;
+
 const Button = styled.div`
   cursor: pointer;
-  margin: 40px auto;
-  padding: 5px 35px;
+  /* width: 70px; */
+  min-width: 60px;
+  margin: 30px 20px;
+  padding: 5px 30px;
   background-color: #6a5acd;
   color: white;
+  text-align: center;
 `;
 
 export default Update;

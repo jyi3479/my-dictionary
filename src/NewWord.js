@@ -46,44 +46,33 @@ const NewWord = (props) => {
 
   return (
     <Outer>
-      <Input>
-        <Title>단어 추가하기</Title>
-        <Box
-          component="form"
-          sx={{
-            "& > :not(style)": { m: 1, width: "500" },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            label="단어"
-            variant="standard"
-            color="primary"
-            inputRef={(el) => (inputRef.current[0] = el)}
-            margin="dense"
-            fullWidth
-            focused
+      <Title>단어 수정하기</Title>
+
+      <div
+        style={{
+          width: "50vw",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          padding: "10px",
+        }}
+      >
+        <label>
+          단어
+          <Input //input으로 하면 defaultValue 해결된다.
+            ref={(el) => (inputRef.current[0] = el)}
           />
-          <TextField
-            label="설명"
-            variant="standard"
-            color="primary"
-            inputRef={(el) => (inputRef.current[1] = el)}
-            margin="dense"
-            fullWidth
-            focused
-          />
-          <TextField
-            label="예문"
-            variant="standard"
-            color="primary"
-            inputRef={(el) => (inputRef.current[2] = el)}
-            margin="dense"
-            fullWidth
-            focused
-          />
-        </Box>
+        </label>
+
+        <label>
+          설명
+          <Input ref={(el) => (inputRef.current[1] = el)} />
+        </label>
+
+        <label>
+          예문
+          <Input ref={(el) => (inputRef.current[2] = el)} />
+        </label>
 
         <ButtonBox>
           <Button
@@ -102,7 +91,7 @@ const NewWord = (props) => {
             돌아가기
           </Button>
         </ButtonBox>
-      </Input>
+      </div>
     </Outer>
   );
 };
@@ -111,6 +100,12 @@ const Outer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+
+  label {
+    font-weight: 600;
+    color: #6a5acd;
+  }
 `;
 
 const Title = styled.h1`
@@ -119,22 +114,34 @@ const Title = styled.h1`
   margin: 50px;
 `;
 
-const Input = styled.div`
-  max-width: 350px;
-  margin: 20px auto;
-`;
-
 const ButtonBox = styled.div`
+  width: 50vw;
   display: flex;
   justify-content: center;
 `;
 
+const Input = styled.input`
+  border: none;
+  border-bottom: 1px solid #d2d2ff;
+  margin: 10px 15px;
+  padding: 7px 0;
+  width: 300px;
+  transition: border-color 300ms ease-in-out;
+  &:focus {
+    border-color: #6a5acd;
+    outline: none;
+  }
+`;
+
 const Button = styled.div`
   cursor: pointer;
-  margin: 40px auto;
-  padding: 5px 35px;
+  /* width: 70px; */
+  min-width: 60px;
+  margin: 30px 20px;
+  padding: 5px 30px;
   background-color: #6a5acd;
   color: white;
+  text-align: center;
 `;
 
 export default NewWord;
