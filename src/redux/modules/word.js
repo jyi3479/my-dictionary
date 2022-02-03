@@ -17,7 +17,6 @@ const CREATE = "word/CREATE";
 const DELETE = "word/DELETE";
 const UPDATE = "word/UPDATE";
 const COMPLETE = "word/COMPLETE";
-// const REMOVE = "my-app/widgets/REMOVE";
 
 // 초기값
 const initialState = {
@@ -53,7 +52,7 @@ export const loadWordFB = () => {
   return async function (dispatch) {
     const word_data = await getDocs(collection(db, "dictionary"));
 
-    console.log(word_data);
+    // console.log(word_data);
     let word_list = [];
 
     word_data.forEach((doc) => {
@@ -79,7 +78,6 @@ export const addWordFB = (word) => {
 };
 
 export const completeWordFB = (word_id, word_completed) => {
-  // getState 왜 받아오지?
   return async function (dispatch, getState) {
     if (!word_id) {
       window.alert("아이디가 없네요!");
@@ -192,26 +190,3 @@ export default function reducer(state = initialState, action = {}) {
       return state;
   }
 }
-
-// export function loadWidgets() {
-//   return { type: LOAD };
-// }
-
-// export function createWidget(widget) {
-//   return { type: CREATE, widget };
-// }
-
-// export function updateWidget(widget) {
-//   return { type: UPDATE, widget };
-// }
-
-// export function removeWidget(widget) {
-//   return { type: REMOVE, widget };
-// }
-
-// // side effects, only as applicable
-// // e.g. thunks, epics, etc
-// export function getWidget() {
-//   return (dispatch) =>
-//     get("/widget").then((widget) => dispatch(updateWidget(widget)));
-// }

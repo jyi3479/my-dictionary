@@ -47,7 +47,7 @@ const Button = styled.div`
   bottom: 15px;
   right: 15px;
 
-  transition: transform 300ms ease-in-out;
+  transition: transform 300ms ease-in-out linear; //linear : 스무스하게 돌아감
 
   &:hover {
     transform: rotate(90deg);
